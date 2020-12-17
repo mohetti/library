@@ -1,0 +1,36 @@
+h1 {
+    text-align: center;
+}
+
+.form {
+    position: fixed;
+    height: auto;
+    width: 200px;
+    right: 20px;
+    top: 10px;
+}
+
+.display {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.flexItems {
+    display: flex;
+    margin: 5px;
+    color: black;
+    font: Georgia;
+    font-size: 20px;
+    height: 200px;
+    width: 200px;
+    align-items: center;  
+}
+
+.spanItem {
+    width: 100%;
+    text-align: center;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
