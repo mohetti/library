@@ -89,6 +89,7 @@ class UI {
         bookDelete.className = "bookDelete";
         deleteBtn.className = "delete";
         deleteBtn.innerText = "Delete";
+        deleteBtn.dataset.parent = bookInput.id;
         
         bookDelete.appendChild(deleteBtn);
         bookContainer.appendChild(bookDelete);
@@ -97,6 +98,11 @@ class UI {
             let ui = new UI();
             ui.updateReadStatus(this.checked, this.id);
         })
+
+        deleteBtn.addEventListener("click", function(e) {
+            let ui = new UI();
+            ui.delete(e.target.dataset.parent);
+        }) 
 
     }
 
@@ -110,12 +116,32 @@ class UI {
             myLibrary[id].read = true;
         }
     }
+    delete(input) {
+        myLibrary.splice(input, 1);
+        let removeElement = document.getElementById(input);
+        removeElement.remove();
+        let modifyDisplay = document.getElementsByClassName("bookContainer");
+        Array.prototype.map.call(modifyDisplay, function(e) {
+            if (e.id < input) {
+                return;
+            } else {
+                e.id = e.id - 1;
+                e.childNodes[4].lastChild.dataset.parent = e.id;
+                console.log(e);
+                console.log(e.childNodes[4].lastChild.dataset.parent);
+            }
+        })
+    }
 }
 
 submitBtn.addEventListener("click", function(e) {
     if (author.value === "" || title.value === "" || pages.value === "") {
         return alert("Please enter all the fields");
-    } // ******** else if statement for number-check of pages **********
+    } else if (isNaN(pages.value) === true) {
+        return alert("Please enter the number of book pages");
+    } else if (author.value.length > 50 || title.value > 50) {
+        return alert("Please shorten the inputs to less than 50 characters.")
+    }
 
     let newBook = new Books(author.value, title.value, pages.value, read.checked)
     myLibrary.push(newBook);
